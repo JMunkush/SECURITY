@@ -1,4 +1,4 @@
-package io.munkush.app.userdetails;
+package io.munkush.app.config.security.userdetails;
 
 import io.munkush.app.model.User;
 import io.munkush.app.repository.UserRepository;
@@ -21,6 +21,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         var user = userRepository.findByUsername(username);
 
+        if(user == null){
+            throw new IllegalStateException("user not found");
+        }
 
         return map(user);
     }

@@ -1,4 +1,4 @@
-package io.munkush.app.userdetails;
+package io.munkush.app.config.security.userdetails;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

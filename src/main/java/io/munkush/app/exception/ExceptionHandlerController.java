@@ -38,4 +38,17 @@ public class ExceptionHandlerController {
         );
     }
 
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<HttpResponse> handleIllegal(IllegalStateException ex) {
+
+        return ResponseEntity.badRequest().body(
+                HttpResponse.builder()
+                        .httpStatus(HttpStatus.BAD_REQUEST)
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .dateTime(LocalDateTime.now().toString())
+                        .message(ex.getMessage())
+                        .build()
+        );
+    }
 }

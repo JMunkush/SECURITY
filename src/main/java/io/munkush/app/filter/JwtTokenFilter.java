@@ -1,6 +1,6 @@
 package io.munkush.app.filter;
 
-import io.munkush.app.config.jwt.JwtFactory;
+import io.munkush.app.config.security.JwtFactory;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

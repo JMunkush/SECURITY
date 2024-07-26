@@ -1,6 +1,6 @@
 package io.munkush.app.controller;
 
-import io.munkush.app.config.jwt.JwtFactory;
+import io.munkush.app.config.security.JwtFactory;
 import io.munkush.app.dto.UserRegistryResponse;
 import io.munkush.app.dto.UserRequestDto;
 import io.munkush.app.exception.UsernameIsEmptyException;
@@ -35,7 +35,6 @@ public class UserController {
         if(request.getUsername().isBlank()){
             throw new UsernameIsEmptyException("пожалуйста заполните все поля (имя)");
         }
-
 
 
         if (request.getPassword().isBlank() || request.getUsername().isBlank()){

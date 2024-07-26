@@ -1,4 +1,4 @@
-package io.munkush.app.config.jwt;
+package io.munkush.app.config.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

@@ -32,10 +32,16 @@ public class UserService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        var role = new Role("USER");
-        role.setId(UUID.randomUUID().toString());
 
-        user.setRole(List.of(role));
+        if (roleRepository.existsByName("USER")) {
+            var roleFromDB = roleRepository.findByName("USER");
+            user.setRole(List.of(roleFromDB));
+        } else {
+            var role = new Role("USER");
+            role.setId(UUID.randomUUID().toString());
+            user.setRole(List.of(role));
+        }
+
 
 
         userRepository.save(user);
