@@ -35,7 +35,7 @@ public class UserController {
         if(request.getUsername().isBlank()){
             throw new UsernameIsEmptyException("пожалуйста заполните все поля (имя)");
         }
-
+g
 
         if (request.getPassword().isBlank() || request.getUsername().isBlank()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(UserRegistryResponse.builder()

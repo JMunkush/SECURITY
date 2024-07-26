@@ -7,39 +7,38 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+public class JwtTokenCookieFilter extends OncePerRequestFilter {
 
-public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtFactory jwtFactory;
     private final UserDetailsService userDetailsService;
 
-    public JwtTokenFilter(JwtFactory jwtFactory, UserDetailsService userDetailsService) {
+    public JwtTokenCookieFilter(JwtFactory jwtFactory, UserDetailsService userDetailsService) {
         this.jwtFactory = jwtFactory;
         this.userDetailsService = userDetailsService;
     }
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException, ServletException, IOException {
 
-        var token = request.getHeader("Authorization");
+        var cookies = request.getCookies();
 
-        // Если токена существует, то:
-        if (token != null) {
-            if (token.startsWith("Bearer") && token.length() > 7) {
-                token = token.substring(7);
-                FilterUtil.checkTokenAndSetAuth(token, jwtFactory, userDetailsService);
-            }
+        var cookie = Arrays.stream(cookies)
+                .filter(r -> r.getName().equals("access-token")).toList().get(0);
 
-            filterChain.doFilter(request, response);
-
+        if(cookie != null) {
+            var token = cookie.getValue();
+            // Если токена существует, то:
+            FilterUtil.checkTokenAndSetAuth(token, jwtFactory, userDetailsService);
         }
+
+        filterChain.doFilter(request, response);
+
     }
 }
